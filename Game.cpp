@@ -12,6 +12,8 @@ void Game::InicializarVariaveis()
     this->enemySpawnTimer = this->enemySpawnTimerMax;
     
     this->maxEnemies = 5;
+    this->health = 10;
+    this->endGame = false;
 }
 
 void Game::InicializarJanela()
@@ -85,6 +87,11 @@ void Game::updateMousePositions()
 
 }
 
+const bool Game::getEndGame() const
+{
+    return this->endGame;
+}
+
 void Game::spawnEnemies()
 {
     this->enemy.setPosition(
@@ -119,11 +126,13 @@ void Game::updateEnemies()
             if (this->enemies[i].getGlobalBounds().contains(this->mousePosView))
             {
                 this->enemies.erase(this->enemies.begin() + i);
-                this->points += 10.f;
+                this->points += 1;
+                //cout << "PONTOS: " << points << endl;
             }
         }
         if (this->enemies[i].getPosition().y > this->window->getSize().y)
         {
+            this->health -= 1;
             this->enemies.erase(this->enemies.begin() + i);
         }
     }
@@ -141,9 +150,16 @@ void Game::update()
 {
     
     this->pollEvents();
-    this->updateMousePositions();
-    //cout << sf::Mouse::getPosition().x<<" "<<sf::Mouse::getPosition().y << endl;
-    this->updateEnemies();
+    if (this->endGame == false)
+    {
+        this->updateMousePositions();
+        //cout << sf::Mouse::getPosition().x<<" "<<sf::Mouse::getPosition().y << endl;
+        this->updateEnemies();
+    }
+    if(this->health == 0)
+    {
+        this->endGame = true;
+    }
 }
 
 void Game::render()

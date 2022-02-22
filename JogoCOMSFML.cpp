@@ -20,7 +20,7 @@ using namespace std;
         //cout << "teste";
 
         //Loop do jogo
-        while (jogo.running())
+        while (jogo.running() && !jogo.getEndGame())
         {
             jogo.update();
             jogo.render();

@@ -14,11 +14,12 @@ private:
 	void InicializarVariaveis();
 	void InicializarJanela();
 
-	int points;
+	unsigned points;
 	float enemySpawnTimer;
 	float enemySpawnTimerMax;
 	int maxEnemies;
-	
+	int health;
+	bool endGame;
 	sf::RenderWindow* window;
 	sf::Event ev;
 	sf::VideoMode videoMode;
@@ -36,7 +37,7 @@ public:
 	virtual ~Game();//destrutor
 	void InitEnemys();
 	//funçoes
-
+	const bool getEndGame() const;
 	void spawnEnemies();
 	void updateEnemies();
 	void renderEnemies();
